@@ -29,6 +29,7 @@ type Action
     = Insert
     | Remove
     | Modify ID Counter.Action
+    | ModifyAll Counter.Action
 
 
 update : Action -> Model -> Model
@@ -55,6 +56,12 @@ update action model =
       in
           { model | counters = List.map updateCounter model.counters }
 
+    ModifyAll counterAction ->
+      let updateCounter (counterID, counterModel) =
+          (counterID, Counter.update counterAction counterModel)
+      in
+         { model | counters = List.map updateCounter model.counters }
+
 
 -- VIEW
 
@@ -63,8 +70,12 @@ view address model =
   let counters = List.map (viewCounter address) model.counters
       remove = button [ onClick address Remove ] [ text "Remove" ]
       insert = button [ onClick address Insert ] [ text "Add" ]
+      incrementAll =
+        button [ onClick address (ModifyAll Counter.Increment) ] [ text "+" ]
+      decrementAll =
+        button [ onClick address (ModifyAll Counter.Decrement) ] [ text "-" ]
   in
-      div [] ([remove, insert] ++ counters)
+      div [] ([decrementAll, remove, insert, incrementAll] ++ counters)
 
 
 viewCounter : Signal.Address Action -> (ID, Counter.Model) -> Html
