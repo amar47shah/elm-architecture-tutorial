@@ -12,16 +12,15 @@ type alias Model = Int
 
 -- UPDATE
 
-type Action = Increment | Decrement
+type Action = Increment | IncrementFive | Decrement | DecrementFive
 
 update : Action -> Model -> Model
 update action model =
   case action of
-    Increment ->
-      model + 1
-
-    Decrement ->
-      model - 1
+    Increment     -> model + 1
+    Decrement     -> model - 1
+    IncrementFive -> model + 5
+    DecrementFive -> model - 5
 
 
 -- VIEW
@@ -29,18 +28,20 @@ update action model =
 view : Signal.Address Action -> Model -> Html
 view address model =
   div []
-    [ button [ onClick address Decrement ] [ text "-" ]
+    [ button [ onClick address DecrementFive ] [ text "-5" ]
+    , button [ onClick address Decrement     ] [ text "-"  ]
     , div [ countStyle ] [ text (toString model) ]
-    , button [ onClick address Increment ] [ text "+" ]
+    , button [ onClick address Increment     ] [ text "+"  ]
+    , button [ onClick address IncrementFive ] [ text "+5" ]
     ]
 
 
 countStyle : Attribute
 countStyle =
   style
-    [ ("font-size", "20px")
+    [ ("font-size", "50px")
     , ("font-family", "monospace")
     , ("display", "inline-block")
-    , ("width", "50px")
+    , ("width", "100px")
     , ("text-align", "center")
     ]
