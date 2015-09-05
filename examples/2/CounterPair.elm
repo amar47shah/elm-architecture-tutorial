@@ -1,4 +1,4 @@
-module CounterPair where
+module CounterPair (Model, init, Action, update, view) where
 
 import Counter
 import Html exposing (..)

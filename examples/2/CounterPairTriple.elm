@@ -1,4 +1,4 @@
-module CounterPairTriple where
+module CounterPairTriple (Model, init, Action, update, view) where
 
 import CounterPair
 import Html exposing (..)
