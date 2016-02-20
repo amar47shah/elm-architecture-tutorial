@@ -1,4 +1,4 @@
-module Counter (Model, init, Action, update, view, viewWithRemoveButton, Context) where
+module Counter (Model, init, Action(..), update, view, viewWithRemoveButton, Context) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
