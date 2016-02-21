@@ -67,7 +67,7 @@ update action model =
 view : Signal.Address Action -> Model -> Html
 view address model =
   let counters = List.map (viewCounter address) model.counters
-      insert = button [ onClick address Insert ] [ text "Add" ]
+      insert = div [ insertStyle ] [ button [ onClick address Insert ] [ text "New" ] ]
       incrementAll =
         button [ onClick address (ModifyAll Counter.Increment) ] [ text "+" ]
       decrementAll =
@@ -84,3 +84,11 @@ viewCounter address (id, model) =
           (Signal.forwardTo address (always (Remove id)))
   in
       Counter.viewWithRemoveButton context model
+
+insertStyle : Attribute
+insertStyle =
+  style
+    [ ("display", "inline-block")
+    , ("width", "50px")
+    , ("text-align", "center")
+    ]
